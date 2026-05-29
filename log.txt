@@ -1,0 +1,114 @@
+DEBUG [19:56:37.666:MainProcess:MainThread:log.py:68] Command: """/home/tristin_smith/Bioinfo26/remoraEnv/venv/bin/remora model train train_dataset.jsn --device 0 --epochs 20 --output-path GhostShark --model ConvLSTM_w_ref.py"""
+[19:56:37.685] Seed selected is 195564987
+[19:56:37.859] Loading dataset from Remora dataset config
+DEBUG [19:56:37.860:MainProcess:MainThread:data_chunks.py:1346] Computing hash for dataset at /home/tristin_smith/Bioinfo26/remoraEnv/normal_chunks
+DEBUG [19:56:37.871:MainProcess:MainThread:data_chunks.py:1346] Computing hash for dataset at /home/tristin_smith/Bioinfo26/remoraEnv/uracil_chunks
+DEBUG [19:56:37.883:MainProcess:MainThread:data_chunks.py:1744] Overriding extra_metadata_arrays from value '{'modbase_label': ['int64', 'Modified base label'], 'read_id': ['<U36', 'Read identifier'], 'read_focus_base': ['int64', 'Position within read training sequence'], 'percent_identity': ['float32', 'Reference mapping percent identity'], 'start_time': ['uint32', 'Read start time in seconds since first read in dataset'], 'duration': ['int64', 'Number of samples in trimmed read']}' to '{'modbase_label': ['int64', 'Modified base label']}'
+DEBUG [19:56:37.883:MainProcess:MainThread:data_chunks.py:1744] Overriding extra_metadata_arrays from value '{'modbase_label': ['int64', 'Modified base label'], 'read_id': ['<U36', 'Read identifier'], 'read_focus_base': ['int64', 'Position within read training sequence'], 'percent_identity': ['float32', 'Reference mapping percent identity'], 'start_time': ['uint32', 'Read start time in seconds since first read in dataset'], 'duration': ['int64', 'Number of samples in trimmed read']}' to '{'modbase_label': ['int64', 'Modified base label']}'
+DEBUG [19:56:37.883:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:37.883:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+[19:56:37.883] Dataset summary:
+                     size : 4,600,955
+       kmer context bases : (4, 4)
+            chunk context : (200, 200)
+           reverse signal : False
+ chunk extract base start : False
+     chunk extract offset : 0
+               pa scaling : None
+          sig map refiner : No Remora signal refine/map settings loaded
+        batches preloaded : False
+      is modbase dataset? : True
+                mod bases : ['U']
+           mod long names : ['T']
+                   motifs : [('T', 0)]
+
+[19:56:37.884] Loading model
+[19:56:37.886] Model structure:
+network(
+  (sig_conv1): Conv1d(1, 4, kernel_size=(5,), stride=(1,))
+  (sig_bn1): BatchNorm1d(4, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (sig_conv2): Conv1d(4, 16, kernel_size=(5,), stride=(1,))
+  (sig_bn2): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (sig_conv3): Conv1d(16, 64, kernel_size=(9,), stride=(3,))
+  (sig_bn3): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (seq_conv1): Conv1d(36, 16, kernel_size=(5,), stride=(1,))
+  (seq_bn1): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (seq_conv2): Conv1d(16, 64, kernel_size=(13,), stride=(3,))
+  (seq_bn2): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (merge_conv1): Conv1d(128, 64, kernel_size=(5,), stride=(1,))
+  (merge_bn): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (lstm1): LSTM(64, 64)
+  (lstm2): LSTM(64, 64)
+  (fc): Linear(in_features=64, out_features=2, bias=True)
+  (dropout): Dropout(p=0.3, inplace=False)
+)
+[19:56:37.886] Gradients will be clipped (by value) at 0.00 MADs above the median of the last 1000 gradient maximums.
+[19:56:38.396] Params (k) 134.08 | MACs (M) 36395.12
+[19:56:38.396] Preparing training settings
+[19:56:38.419] Training optimizer and scheduler settings: TrainOpts(epochs=20, early_stopping=10, optimizer_str='AdamW', opt_kwargs=(('weight_decay', 0.0001, 'float'),), learning_rate=0.001, lr_scheduler_str='CosineAnnealingLR', lr_scheduler_kwargs=(('T_max', 100, 'int'), ('eta_min', 1e-06, 'float')), lr_cool_down_epochs=5, lr_cool_down_lr=1e-07)
+DEBUG [19:56:38.946:MainProcess:MainThread:train_model.py:348] Splitting dataset
+DEBUG [19:56:38.946:MainProcess:MainThread:data_chunks.py:2985] train split override metadata: {'dataset_start': 5000, 'dataset_end': 3236607}
+DEBUG [19:56:38.946:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:38.946:MainProcess:MainThread:data_chunks.py:2994] test split override metadata: {'dataset_start': 0, 'dataset_end': 5000}
+DEBUG [19:56:38.946:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '3236607' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:2985] train split override metadata: {'dataset_start': 5000, 'dataset_end': 1364348}
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:2994] test split override metadata: {'dataset_start': 0, 'dataset_end': 5000}
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '1364348' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '3236607' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '1364348' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '3236607' to '5000'
+DEBUG [19:56:38.947:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '1364348' to '5000'
+DEBUG [19:56:39.168:MainProcess:MainThread:train_model.py:364] Extracting head of train dataset
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '3236607' to '10000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '1364348' to '10000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '3236607' to '10000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '1364348' to '10000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_bases from value '[]' to '['U']'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding mod_long_names from value '[]' to '['T']'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '3236607' to '10000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_start from value '0' to '5000'
+DEBUG [19:56:39.169:MainProcess:MainThread:data_chunks.py:1744] Overriding dataset_end from value '1364348' to '10000'
+[19:56:39.403] Dataset loaded with labels: control:3,236,607; T:1,364,348
+[19:56:39.416] Train labels: control:3,231,607; T:1,359,348
+[19:56:39.416] Held-out validation labels: control:4,096; T:4,096
+[19:56:39.416] Training set validation labels: control:4,173; T:4,019
+[19:56:39.416] Running initial validation
+DEBUG [19:56:40.006:MainProcess:MainThread:train_model.py:392] Epoch Summary:
+percent_of_dataset_per_epoch	batch_control	batch_T	dataset_chunks_per_epoch	dataset_size	dataset_control	dataset_T	percent_removed_by_filters	filters	path
+ 154.7277%	1,024.0	0.0	5,000,192.0	3,231,607	3,231,607	0	   0.00%	None	/home/tristin_smith/Bioinfo26/remoraEnv/normal_chunks
+ 367.8375%	0.0	1,024.0	5,000,192.0	1,359,348	0	1,359,348	   0.00%	None	/home/tristin_smith/Bioinfo26/remoraEnv/uracil_chunks
+[19:56:40.006] Start training
+DEBUG [19:56:40.035:Process-1:MainThread:data_chunks.py:2596] Dataset worker 0 using super batch offsets 5892, 671450
+DEBUG [19:56:40.056:Process-2:MainThread:data_chunks.py:2596] Dataset worker 1 using super batch offsets 2079059, 413126
+DEBUG [20:07:56.269:MainProcess:MainThread:train_model.py:539] 80.0% accuracy threshold surpassed
+DEBUG [20:07:56.269:MainProcess:MainThread:train_model.py:546] Saving best model after 1 epochs with val_acc 0.938232421875
+DEBUG [20:19:13.170:MainProcess:MainThread:train_model.py:546] Saving best model after 2 epochs with val_acc 0.9635009765625
+DEBUG [20:30:28.971:MainProcess:MainThread:train_model.py:546] Saving best model after 3 epochs with val_acc 0.9639892578125
+DEBUG [20:41:46.223:MainProcess:MainThread:train_model.py:546] Saving best model after 4 epochs with val_acc 0.9703369140625
+DEBUG [21:15:35.376:MainProcess:MainThread:train_model.py:546] Saving best model after 7 epochs with val_acc 0.97412109375
+DEBUG [21:26:52.495:MainProcess:MainThread:train_model.py:546] Saving best model after 8 epochs with val_acc 0.9744873046875
+DEBUG [22:00:41.118:MainProcess:MainThread:train_model.py:546] Saving best model after 11 epochs with val_acc 0.974853515625
+DEBUG [22:11:57.971:MainProcess:MainThread:train_model.py:546] Saving best model after 12 epochs with val_acc 0.976806640625
+DEBUG [22:57:10.275:MainProcess:MainThread:train_model.py:546] Saving best model after 16 epochs with val_acc 0.97900390625
+[23:42:21.388] Saving final model checkpoint
+[23:42:21.529] Done
